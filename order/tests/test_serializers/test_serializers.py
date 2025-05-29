@@ -13,33 +13,22 @@ def test_order_serializer_total():
 
     # Cria categoria
     category = Category.objects.create(
-        title="Games",
-        slug="games",
-        description="Jogos",
-        active=True
+        title="Games", slug="games", description="Jogos", active=True
     )
 
     # Cria produtos
     product1 = Product.objects.create(
-        title="Playstation 5",
-        description="Console",
-        price=5000,
-        active=True
+        title="Playstation 5", description="Console", price=5000, active=True
     )
     product1.category.add(category)
 
     product2 = Product.objects.create(
-        title="Xbox Series X",
-        description="Console",
-        price=4500,
-        active=True
+        title="Xbox Series X", description="Console", price=4500, active=True
     )
     product2.category.add(category)
 
     # Dados para criar pedido
-    data = {
-        "product": [product1.id, product2.id]
-    }
+    data = {"product": [product1.id, product2.id]}
 
     # Valida e salva
     serializer = OrderSerializer(data=data)
