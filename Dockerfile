@@ -23,6 +23,9 @@ RUN curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VE
 
 WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
+COPY requirements.txt .
+RUN poetry install --with dev --no-interaction --no-ansi
+
 
 RUN poetry install --only main
 
