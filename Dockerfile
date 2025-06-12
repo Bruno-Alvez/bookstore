@@ -14,15 +14,20 @@ ENV PYTHONUNBUFFERED=1 \
 
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
+
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
        curl build-essential libpq-dev gcc \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sSL https://install.python-poetry.org | python3 - --version $POETRY_VERSION
 
 WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
+COPY requirements.txt .
+RUN poetry install --with dev --no-interaction --no-ansi
+
 
 RUN poetry install --only main
 
