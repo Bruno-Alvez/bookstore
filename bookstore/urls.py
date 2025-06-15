@@ -6,29 +6,8 @@ import debug_toolbar
 from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework.authtoken.views import obtain_auth_token
-from django.http import JsonResponse, HttpResponse
-import os
-import subprocess
-
-def home(request):
-    return JsonResponse({
-        "message": "🚀 Welcome to the Bookstore API!",
-        "status": "running",
-        "documentation": "https://github.com/Bruno-Alvez/bookstore"
-    })
-
-def update_server(request):
-    if request.method == "POST":
-        project_path = "/home/brunoalvesdev/bookstore"
-        os.chdir(project_path)
-        result = subprocess.run(["git", "pull"], capture_output=True, text=True)
-
-        wsgi_path = "/var/www/brunoalvesdev_pythonanywhere_com_wsgi.py"
-        os.utime(wsgi_path, None)
-
-        return HttpResponse(f"Updated:\n{result.stdout}")
-    else:
-        return HttpResponse("Only POST requests are allowed.", status=405)
+from django.http import JsonResponse
+from .views import update_server, home
 
 urlpatterns = [
     path('', home),
