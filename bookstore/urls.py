@@ -1,12 +1,9 @@
-"""
-URL configuration for bookstore project.
-"""
-
-import debug_toolbar
+# bookstore/bookstore/urls.py
 from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework.authtoken.views import obtain_auth_token
 from bookstore.views import update_server, home
+import debug_toolbar
 
 urlpatterns = [
     path('', home),

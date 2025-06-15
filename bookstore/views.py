@@ -1,3 +1,4 @@
+# bookstore/bookstore/views.py
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import git
