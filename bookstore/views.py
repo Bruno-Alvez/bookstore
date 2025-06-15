@@ -5,7 +5,7 @@ import os
 
 
 @csrf_exempt
-def update(request):
+def update_server(request):
     """
     View para automatizar o deploy via GitHub webhook (POST).
     Realiza git pull no repositório e atualiza o WSGI para refletir mudanças.
