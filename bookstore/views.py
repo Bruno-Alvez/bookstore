@@ -10,7 +10,14 @@ def home(request):
     return JsonResponse({
         "message": "🚀 Welcome to the Bookstore API!",
         "status": "running",
-        "documentation": "https://github.com/Bruno-Alvez/bookstore"
+        "documentation": "https://github.com/Bruno-Alvez/bookstore",
+        "endpoints": {
+            "products": "/bookstore/v1/product/",
+            "categories": "/bookstore/v1/category/",
+            "orders": "/bookstore/v1/order/",
+            "token_auth": "/api-token-auth/",
+            "admin": "/admin/",
+        }
     })
 
 @csrf_exempt
