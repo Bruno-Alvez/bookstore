@@ -1,8 +1,10 @@
-# bookstore/bookstore/views.py
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import git
 import os
+import subprocess
+
+STATIC_DIR = '/home/brunoalvesdev/bookstore/staticfiles'
 
 def home(request):
     return JsonResponse({
@@ -18,8 +20,18 @@ def update_server(request):
             repo = git.Repo('/home/brunoalvesdev/bookstore')
             origin = repo.remotes.origin
             origin.pull()
+
+            admin_css_path = os.path.join(STATIC_DIR, 'admin', 'css')
+            if not os.path.exists(admin_css_path):
+                subprocess.run(
+                    ["python3", "manage.py", "collectstatic", "--noinput"],
+                    cwd="/home/brunoalvesdev/bookstore"
+                )
+
             os.utime('/var/www/brunoalvesdev_pythonanywhere_com_wsgi.py', None)
-            return HttpResponse("✅ Code updated from GitHub.")
+
+            return HttpResponse("✅ Code updated and static assets verified.")
         except Exception as e:
             return HttpResponse(f"❌ Update failed: {str(e)}", status=500)
+
     return HttpResponse("Only POST allowed", status=405)
